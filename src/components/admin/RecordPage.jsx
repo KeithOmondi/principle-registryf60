@@ -9,7 +9,6 @@ import {
 import { fetchCourts } from "../../store/slices/courtSlice"; // added
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import EditRecord from "../../pages/admin/EditRecord";
 
 const RecordPage = () => {
   const dispatch = useDispatch();
@@ -45,17 +44,19 @@ const RecordPage = () => {
 
   // Auto-calc lead time
   useEffect(() => {
-    if (formData.dateReceived && formData.dateOfReceipt) {
-      const received = new Date(formData.dateReceived);
-      const receipt = new Date(formData.dateOfReceipt);
-      if (!isNaN(received) && !isNaN(receipt)) {
-        const diffDays = Math.ceil(
-          (receipt - received) / (1000 * 60 * 60 * 24)
-        );
-        setFormData((prev) => ({ ...prev, leadTime: diffDays }));
-      }
+  if (formData.dateOfReceipt && formData.dateReceived) {
+    const received = new Date(formData.dateReceived);
+    const receipt = new Date(formData.dateOfReceipt);
+
+    if (!isNaN(received) && !isNaN(receipt)) {
+      const diffDays = Math.ceil(
+        (receipt - received) / (1000 * 60 * 60 * 24)
+      );
+      setFormData((prev) => ({ ...prev, leadTime: diffDays >= 0 ? diffDays : 0 }));
     }
-  }, [formData.dateReceived, formData.dateOfReceipt]);
+  }
+}, [formData.dateOfReceipt, formData.dateReceived]);
+
 
   /* ----------------- Edit Record ----------------- */
   const handleEditClick = (record) => {
@@ -138,15 +139,18 @@ const RecordPage = () => {
                 <th className="border p-3 text-left">Court Station</th>
                 <th className="border p-3 text-left">Cause No.</th>
                 <th className="border p-3 text-left">Name of Deceased</th>
-                <th className="border p-3 text-left">Date Received</th>
+                <th className="border p-3 text-left">Date Received At PR</th>
                 <th className="border p-3 text-left">Date of Receipt</th>
-                <th className="border p-3 text-left">
-                  Date Forwarded to G.P.
-                </th>{" "}
                 {/* NEW */}
                 <th className="border p-3 text-left">Lead Time(Days)</th>
                 <th className="border p-3 text-left">Form 60 Compliance</th>
-                <th className="border p-3 text-left">Actions</th>
+                <th className="border p-3 text-left">Reason For Rejection</th>
+                <th className="border p-3 text-left">
+                  Date Forwarded to G.P.
+                </th>{" "}
+                
+                
+                
               </tr>
             </thead>
             <tbody>
@@ -170,13 +174,11 @@ const RecordPage = () => {
                   <td className="border p-3">
                     {r.dateOfReceipt ? r.dateOfReceipt.split("T")[0] : "N/A"}
                   </td>
-                  <td className="border p-3">
-                    {r.dateForwardedToGP
-                      ? r.dateForwardedToGP.split("T")[0]
-                      : "N/A"}
-                  </td>{" "}
+                  
+                  
                   {/* NEW */}
                   <td className="border p-3">{r.leadTime}</td>
+
                   <td
                     className={`border p-3 font-medium ${
                       r.form60Compliance === "Approved"
@@ -188,6 +190,7 @@ const RecordPage = () => {
                   >
                     {r.form60Compliance}
                   </td>
+
                   <td className="border p-3 text-center space-x-3">
                     <button
                       onClick={() => handleEditClick(r)}
@@ -210,6 +213,15 @@ const RecordPage = () => {
                       </button>
                     )}
                   </td>
+
+                  <td className="border p-3">
+                    {r.dateForwardedToGP
+                      ? r.dateForwardedToGP.split("T")[0]
+                      : "N/A"}
+                  </td>{" "}
+                  
+                  
+                  
                 </tr>
               ))}
             </tbody>
@@ -252,7 +264,7 @@ const RecordPage = () => {
           <div className="bg-white w-96 rounded-lg shadow-lg p-6">
             <h3 className="text-xl font-bold mb-4">✏️ Edit Record</h3>
             {/* You can reuse your AddRecord form here and bind formData */}
-            <EditRecord />
+            <p className="text-gray-500">Edit form goes here...</p>
             <button
               onClick={() => setEditMode(false)}
               className="mt-4 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
