@@ -3,8 +3,8 @@ import axios from "axios";
 
 axios.defaults.withCredentials = true;
 
-const API_BASE = "http://localhost:8000/api/v1/user";
-const AUTH_API = "http://localhost:8000/api/v1/auth";
+const API_BASE = "https://pr60.onrender.com/api/v1/user";
+const AUTH_API = "https://pr60.onrender.com/api/v1/auth";
 
 // ==========================
 // Initial State

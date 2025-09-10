@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const REPORT_API = "http://localhost:8000/api/v1/bulk";
+const REPORT_API = "https://pr60.onrender.com/api/v1/bulk";
 
 // Fetch report by date range
 export const fetchBulkReport = createAsyncThunk(
