@@ -9,6 +9,7 @@ import {
 import { fetchCourts } from "../../store/slices/courtSlice"; // added
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import EditRecord from "../../pages/admin/EditRecord";
 
 const RecordPage = () => {
   const dispatch = useDispatch();
@@ -251,7 +252,7 @@ const RecordPage = () => {
           <div className="bg-white w-96 rounded-lg shadow-lg p-6">
             <h3 className="text-xl font-bold mb-4">✏️ Edit Record</h3>
             {/* You can reuse your AddRecord form here and bind formData */}
-            <p className="text-gray-500">Edit form goes here...</p>
+            <EditRecord />
             <button
               onClick={() => setEditMode(false)}
               className="mt-4 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
