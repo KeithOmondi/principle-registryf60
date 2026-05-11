@@ -34,6 +34,7 @@ const rejectionReasons = [
   "Error is from Court of origin. Make fresh payments and prepare a corrigenda",
   "Two Deceased in one Form 60",
   "Kindly confirm the deceased name (deceased name and petitoner's name are similar)"
+  "Place of death not indicated"
 ];
 
 const AddRecord = () => {
